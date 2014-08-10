@@ -47,4 +47,7 @@ add_executable(TestEigenMPFR TestEigenMPFR.cpp)
 target_link_libraries(TestEigenMPFR ${ALL_LIBS})
 add_test(EigenMPFR TestEigenMPFR)
 
+add_executable(TestEigenMPFRGamma TestEigenMPFRGamma.cpp)
+target_link_libraries(TestEigenMPFRGamma ${ALL_LIBS})
+add_test(EigenMPFRGamma TestEigenMPFRGamma)
 
