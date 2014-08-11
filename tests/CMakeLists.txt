@@ -51,3 +51,7 @@ add_executable(TestEigenMPFRGamma TestEigenMPFRGamma.cpp)
 target_link_libraries(TestEigenMPFRGamma ${ALL_LIBS})
 add_test(EigenMPFRGamma TestEigenMPFRGamma)
 
+add_executable(TestRJacobi TestRJacobi.cpp)
+target_link_libraries(TestRJacobi ${ALL_LIBS})
+add_test(RJacobi TestRJacobi)
+
