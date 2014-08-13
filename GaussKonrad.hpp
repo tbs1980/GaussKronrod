@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cmath>
 #include <Eigen/Core>
+#include <Eigen/Eigenvalues>
 
 #include "src/Laurie.hpp"
 
