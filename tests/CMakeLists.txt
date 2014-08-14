@@ -55,3 +55,7 @@ add_executable(TestRJacobi TestRJacobi.cpp)
 target_link_libraries(TestRJacobi ${ALL_LIBS})
 add_test(RJacobi TestRJacobi)
 
+add_executable(TestRKronrad TestRKronrad.cpp)
+target_link_libraries(TestRKronrad ${ALL_LIBS})
+add_test(RKronrad TestRKronrad)
+
