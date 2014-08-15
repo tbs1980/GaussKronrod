@@ -14,7 +14,7 @@ A code for calculating Gauss-Kronrod quadrature nodes and weights. The algorithm
 
 	$ mkdir build
 	$ cd build
-	$ cmake -EIGEN3_INCLUDE_DIR=path_to_Eigen3 -DGMP_ROOT=path_GMP_root_dir -DMPFR_ROOT=path_to_MPFR_root_dir -DMPFRCPP_ROOT=path_to_MPFRC++_root_dir path_to_GaussKronrad
+	$ cmake -DEIGEN3_INCLUDE_DIR=path_to_Eigen3 -DGMP_ROOT=path_GMP_root_dir -DMPFR_ROOT=path_to_MPFR_root_dir -DMPFRCPP_ROOT=path_to_MPFRC++_root_dir  path_to_GaussKronrad
 	$ make
 
 For example,
@@ -22,7 +22,7 @@ For example,
 	$ cmake -DEIGEN3_INCLUDE_DIR=/Users/sbalan/Library/gcc/eigen-3.2.1/include/eigen3/ -DGMP_ROOT=/Users/sbalan/Library/gcc/gmp-6.0.0/ -DMPFR_ROOT=/Users/sbalan/Library/gcc/mpfr-3.1.2/ -DMPFRCPP_ROOT=/Users/sbalan/Library/gcc/mpfrc++-3.5.9/ ../
 	$ make
 
-This will prodcue an executable in the directory `bench` called `bench_PH_mpkronrod` . If you rum this program you will get 
+This will prodcue an executable in the directory `bench` called `bench_PH_mpkronrod` . If you run this program you will get 
 
 	$ ./bench/bench_PH_mpkronrod 
 	-0.9956571630258080807355273	0.0116946388673718742780644
