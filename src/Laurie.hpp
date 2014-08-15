@@ -15,12 +15,11 @@ namespace gauss_konrad {
 
 		static void r_jacobi(const IndexType N,const RealType a,const RealType b,VectorType & a_out, VectorType & b_out)
 		{
+			//TODO : make use the eigen assert facilities
 			assert(a > -1);
 			assert(b > -1);
-
 			assert(a_out.rows()==b_out.rows());
 			assert(a_out.rows() > 0);
-
 			assert(N<=a_out.rows());
 
 			a_out(0) = (b-a)/(a+b+2.);
@@ -36,12 +35,11 @@ namespace gauss_konrad {
 
 		static void r_jacobi_01(const IndexType N,const RealType a,const RealType b,VectorType & a_out, VectorType & b_out)
 		{
+			//TODO : make use the eigen assert facilities
 			assert(a > -1);
 			assert(b > -1);
-
 			assert(a_out.rows()==b_out.rows());
 			assert(a_out.rows() > 0);
-
 			assert(N<=a_out.rows());
 
 			r_jacobi(N,a, b, a_out, b_out);
@@ -64,10 +62,10 @@ namespace gauss_konrad {
 		static void r_kronrod(const IndexType N,VectorType const & a_in, VectorType const & b_in,
 			VectorType & a, VectorType & b)
 		{
+			//TODO : make use the eigen assert facilities
 			assert(a_in.rows()==b_in.rows());
 			assert(a_in.rows()>0);
 			assert(a_in.rows() >= ceil(3*N/2)+1 );
-
 			assert(a.rows()==2*N+1);
 			assert(b.rows()==2*N+1);
 
@@ -88,8 +86,6 @@ namespace gauss_konrad {
 			VectorType t=VectorType::Zero(floor(N/2)+2);
 
 			t(1)=b(N+1);
-
-			
 
 			for(IndexType m=0;m<N-2+1;++m)
 			{
@@ -119,155 +115,92 @@ namespace gauss_konrad {
 				{
 					IndexType l=m-k;
 					j=N-1-l;
-					//std::cout<<j<<"\t";
-					//s(j+2)=cumsum(-(a(k+N+2)-a(l+1)).*t(j+2)-b(k+N+2).*s(j+2)+b(l+1).*s(j+3));
 					u = u - ( a(k+N+1)-a(l) )*t(j+1) - b(k+N+1)*s(j+1) + b(l)*s(j+2);
 					s(j+1) = u;
 				}
 
-				//std::cout<<std::endl;
-
-				//std::cout<<s<<"\n"<<std::endl;
-
 				k=floor((m+1)/2);
-
-				std::cout<<k<<std::endl;
 
 				if(m % 2 == 0)
 				{
-					//a(k+N+2)=a(k+1)+(s(j+2)-b(k+N+2)*s(j+3))/t(j+3);
 					a(k+N+1)=a(k)+(s(j+1)-b(k+N+1)*s(j+2))/t(j+2);
-					std::cout<<"a(k+N+1) 2 "<<a(k+N+1)<<std::endl;
 				}
 				else
 				{
-					//b(k+N+2)=s(j+2)/s(j+3);
 					b(k+N+1)=s(j+1)/s(j+2);
 				}
+
+				VectorType swap=s;
+				s=t;
+				t=swap;
 			}
 
 			a(2*N)=a(N-1)-b(2*N)*s(1)/t(1);
 		}
 
-		/*
-		static void r_kronrod(const IndexType N,VectorType & a, VectorType & b)
+		static void kronrod(const IndexType N,VectorType const & a, VectorType const & b,
+			VectorType & x, VectorType & w)
 		{
-			assert(a.rows()==b.rows());
-			assert(a.rows() > 0);
+			//TODO : make use the eigen assert facilities
 			assert(N>0);
-			assert(a.rows() == 2*N+1 );
+			assert(a.rows()==2*N);
+			assert(a.rows()==b.rows());
+			assert(x.rows()==2*N+1);
+			assert(x.rows()==w.rows());
 
-			VectorType s=VectorType::Zero(floor(N/2)+2);
-			VectorType t=VectorType::Zero(floor(N/2)+2);
+			VectorType a0=VectorType::Zero(2*N+1);
+			VectorType b0=VectorType::Zero(2*N+1);
 
-			t(1)=b(N+1);
+			r_kronrod(N,a,b,a0,b0);
 
-			for(IndexType m=1;m<=N-2+1;++m)
-			{
-				RealType u=0;
-				//std::cout<<"m= "<<m<<std::endl;
-				for(IndexType k=floor((m+1)/2);k>0;--k)
-				{
-					IndexType l=m-k;
-					u += ( a(k+N+1) - a(l) )*t(k) + b(k+N+1)*s(k-1) - b(l)*s(k);
-					s(k) = u;
-				}
-
-				VectorType swap(s);
-				s=t;
-				t=swap;
-			}
-
-			return;
-
-			for(IndexType j=floor(N/2);j>0;--j)
-			{
-				s(j) = s(j-1);
-			}
-
-			return;
-
-			for(IndexType m=N-1;m<=2*N-3;++m)
-			{
-				RealType u=0;
-				IndexType j,k;
-				for(k=m+1-N;k<=floor((m-1)/2);++k)
-				{
-					k += 1;
-					IndexType l = m-k;
-					j = N-1-l;
-					u -= ( a(k+N+1) -  a(l) )*t(j) - b(k+N+1)*s(j) + b(l)*s(j+1);
-					s(j) = u;
-				}
-
-				if(m % 2 == 0)
-				{
-					k = m/2;
-					a(k+N+1) = a(k) + ( s(j) -b(k+N+1)*s(j+1) )/t(j+1);
-				}
-				else
-				{
-					k = (m+1)/2;
-					b(k+N+1) =  s(j)/s(j+1);
-				}
-
-				VectorType swap(s);
-				s=t;
-				t=swap;
-			}
-
-			a(2*N) = a(N-1) - b(2*N)*s(1)/t(1);
-		}
-		*/
-		/*
-		static void kronrod(const IndexType N,VectorType const & alpha, VectorType const & beta,VectorType & x, VectorType & w)
-		{
-			//CHECK NEEDED LIKE THE ONE ON LINE 21 IN KONRAD.M
-
-			assert(alpha.rows()==2*N+1)
-			assert(alpha.rows()==beta.rows());
+			//TODO : CHECK NEEDED LIKE THE ONE ON LINE 21 IN KONRAD.M
+			// Do we have an approximately equal function in Eigen?
+			assert( fabs(b0.sum() - (RealType) (2*N+1)) > 1e-5 ); 
 
 			MatrixType J=MatrixType::Zero(2*N+1,2*N+1);
 
 			for(IndexType k=0;k<2*N;++k)
 			{
-				J(k,k)=alpha(k);
-				J(k,k+1)=sqrt(beta(k+1));
+				J(k,k)=a0(k);
+				J(k,k+1)=sqrt(b0(k+1));
 				J(k+1,k)=J(k,k+1);
 			}
 
-			J(2*N,2*N)=alpha(2*N);
+			J(2*N,2*N)=a0(2*N);
 
-			SelfAdjointEigenSolverType es(J);
+			//TODO : Is this assumption of positive definiteness correct?
+			SelfAdjointEigenSolverType es(J); 
 
+			//TODO : make use the eigen assert facilities
 			assert(es.info()==Eigen::Success);
 
-			VectorType x=es.eigenvalues();
+			x=es.eigenvalues();
 			MatrixType V=es.eigenvectors();
 
-			w=beta(0)*(V.row(1).array()*V.row(1).array()).matrix();
+			w=b0(0)*(V.row(0).array()*V.row(0).array()).matrix();
 
-			//the elements for d are ordered in the increasing order
-			//so we don't need to sort this?
 		}
 
 		static void mpkonrad(const IndexType N,VectorType & x, VectorType & w)
 		{
-			VectorType alpha(2*N+1);
-			VectorType beta(2*N+1);
-			r_jacobi_01( 2*N, RealType(0), RealType(0), alpha, beta);
+			//TODO : make use the eigen assert facilities
+			assert(x.rows() ==  2*N+1);
+			assert(w.rows() ==  2*N+1);
+			assert(N>0);
 
-			VectorType x(2*N+1);
-			VectorType w(2*N+1);
+			VectorType a(2*N);
+			VectorType b(2*N);
 
-			kronrod(N,alpha,beta,x,w);
+			r_jacobi_01( 2*N, RealType(0), RealType(0), a, b);
 
-			x = 2.*x-1.;
-			w = 2.*w;
+			kronrod(N,a,b,x,w);
 
+			for(IndexType i=0;i<x.rows();++i)
+			{
+				x(i) = 2.*x(i) - 1.;
+				w(i) = 2.*w(i);
+			}
 		}
-		*/
-		
 	};
 }
 

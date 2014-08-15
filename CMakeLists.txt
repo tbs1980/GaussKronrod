@@ -10,4 +10,9 @@ endif()
 #add the customised package searches to the module path
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-add_subdirectory(tests)
+# only include tests if requested
+if(ENABLE_TESTING)
+	add_subdirectory(tests)
+endif(ENABLE_TESTING)
+
+add_subdirectory(bench)

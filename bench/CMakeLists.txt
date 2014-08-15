@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 2.8)
 
 project(gauss_konrad_tests CXX)
 
-enable_testing()
-
 if(UNIX)
 	if(CMAKE_COMPILER_IS_GNUCXX)
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++98 -pedantic -Wall -Wextra -Wfatal-errors -g")
@@ -39,23 +37,5 @@ include_directories(${CMAKE_SOURCE_DIR})
 # libs
 set(ALL_LIBS ${MPFR_LIBRARIES} ${GMP_LIBRARIES})
 
-#message(STATUS "ALL_LIBS ${ALL_LIBS}")
-
-# Tests
-
-add_executable(TestEigenMPFR TestEigenMPFR.cpp)
-target_link_libraries(TestEigenMPFR ${ALL_LIBS})
-add_test(EigenMPFR TestEigenMPFR)
-
-add_executable(TestEigenMPFRGamma TestEigenMPFRGamma.cpp)
-target_link_libraries(TestEigenMPFRGamma ${ALL_LIBS})
-add_test(EigenMPFRGamma TestEigenMPFRGamma)
-
-add_executable(TestRJacobi TestRJacobi.cpp)
-target_link_libraries(TestRJacobi ${ALL_LIBS})
-add_test(RJacobi TestRJacobi)
-
-add_executable(TestRKronrad TestRKronrad.cpp)
-target_link_libraries(TestRKronrad ${ALL_LIBS})
-add_test(RKronrad TestRKronrad)
-
+add_executable(bench_PH_mpkronrod bench_PH_mpkronrod.cpp)
+target_link_libraries(bench_PH_mpkronrod ${ALL_LIBS})
