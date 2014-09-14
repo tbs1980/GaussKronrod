@@ -1,7 +1,30 @@
 #ifndef LAURIE_HPP
 #define LAURIE_HPP
 
+#include <iostream>
+
 namespace gauss_konrad {
+
+	template<typename T>
+	T Gamma(T x)
+	{
+		return gamma(x);
+	}
+
+	double Gamma(double x)
+	{
+		return tgamma(x);
+	}
+
+	float Gamma(float x)
+	{
+		return tgamma(x);
+	}
+
+	long double Gamma(long double x)
+	{
+		return tgamma(x);
+	}
 
 	template<typename _RealType>
 	class Laurie
@@ -23,7 +46,7 @@ namespace gauss_konrad {
 			assert(N<=a_out.rows());
 
 			a_out(0) = (b-a)/(a+b+2.);
-			b_out(0) = pow(2.,(a+b+1.))*gamma(a+1.)*gamma(b+1.)/gamma(a+b+2.);
+			b_out(0) = pow(2.,(a+b+1.))*Gamma(a+1.)*Gamma(b+1.)/Gamma(a+b+2.);
 
 			for(IndexType n=1;n<N;++n)
 			{
@@ -155,7 +178,7 @@ namespace gauss_konrad {
 
 			//TODO : CHECK NEEDED LIKE THE ONE ON LINE 21 IN KONRAD.M
 			// Do we have an approximately equal function in Eigen?
-			assert( fabs(b0.sum() - (RealType) (2*N+1)) > 1e-5 ); 
+			assert( fabs(b0.sum() - (RealType) (2*N+1)) > 1e-5 );
 
 			MatrixType J=MatrixType::Zero(2*N+1,2*N+1);
 
@@ -169,7 +192,7 @@ namespace gauss_konrad {
 			J(2*N,2*N)=a0(2*N);
 
 			//TODO : Is this assumption of positive definiteness correct?
-			SelfAdjointEigenSolverType es(J); 
+			SelfAdjointEigenSolverType es(J);
 
 			//TODO : make use the eigen assert facilities
 			assert(es.info()==Eigen::Success);

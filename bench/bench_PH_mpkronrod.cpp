@@ -4,11 +4,11 @@
 #include <GaussKonrad.hpp>
 #include <unsupported/Eigen/MPRealSupport>
 
-// to reproduce results from 
+// to reproduce results from
 // http://www.advanpix.com/2011/11/07/gauss-kronrod-quadrature-nodes-weights/
 // see section 4. Tabulated Gauss-Kronrod weights and abscissae
-// the algorithm was proposed by Laurie . 
-// D. P. Laurie (1997). Calculation of Gauss-Kronrod Quadrature Rules. 
+// the algorithm was proposed by Laurie .
+// D. P. Laurie (1997). Calculation of Gauss-Kronrod Quadrature Rules.
 // Mathematics of Computation, 66(219), 1133-1145.
 
 int main(void)
