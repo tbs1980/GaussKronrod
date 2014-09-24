@@ -30,7 +30,7 @@ int main(void)
 	std::cout<<std::fixed;
 	for(IndexType i=0;i<x.rows();++i)
 	{
-		std::cout<<std::setprecision(25)<<x(i)<<"\t"<<w(i)<<std::endl;
+		std::cout<<std::setprecision(15)<<x(i)<<"\t"<<w(i)<<std::endl;
 	}
 
 	return 0;

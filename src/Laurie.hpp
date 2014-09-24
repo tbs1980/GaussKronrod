@@ -95,12 +95,12 @@ namespace gauss_konrad {
 			a=VectorType::Zero(2*N+1);
 			b=VectorType::Zero(2*N+1);
 
-			for(IndexType k=0;k<floor(3*N/2)+1;++k)
+			for(IndexType k=0;k<=floor(3*N/2)+1;++k)
 			{
 				a(k) = a_in(k);
 			}
 
-			for(IndexType k=0;k<ceil(3*N/2)+1;++k)
+			for(IndexType k=0;k<=ceil(3*N/2)+1;++k)
 			{
 				b(k) = b_in(k);
 			}
@@ -150,6 +150,7 @@ namespace gauss_konrad {
 				}
 				else
 				{
+					assert(s(j+2) != 0);
 					b(k+N+1)=s(j+1)/s(j+2);
 				}
 
